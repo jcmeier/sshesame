@@ -6,6 +6,7 @@ import (
 	"io"
 	"strings"
 
+	"github.com/jaksi/sshesame/commands"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"golang.org/x/crypto/ssh"
@@ -180,7 +181,7 @@ func (r terminalReadLiner) ReadLine() (string, error) {
 
 func (context *sessionContext) handleProgram(program []string) {
 	context.active = true
-	var stdin readLiner
+	var stdin commands.ReadLiner
 	var stdout, stderr io.Writer
 	if context.pty {
 		terminal := term.NewTerminal(context, "")
@@ -195,7 +196,8 @@ func (context *sessionContext) handleProgram(program []string) {
 	go func() {
 		defer close(context.inputChan)
 
-		result, err := executeProgram(commandContext{program, stdin, stdout, stderr, context.pty, context.User()})
+		result, err := commands.ExecuteProgram(commands.CreateCommandContext(
+			program, stdin, stdout, stderr, context.pty, context.User()))
 		if err != nil && err != io.EOF && err != clientEOF {
 			warningLogger.Printf("Error executing program: %s", err)
 			return
@@ -265,7 +267,7 @@ func (context *sessionContext) handleRequest(request *ssh.Request) error {
 				return err
 			}
 			context.active = true
-			context.handleProgram(shellProgram)
+			context.handleProgram(commands.ShellProgram)
 			return nil
 		}
 	case "x11-req":
