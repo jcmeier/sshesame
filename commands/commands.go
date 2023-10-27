@@ -34,15 +34,16 @@ type command interface {
 }
 
 var commands = map[string]command{
-	"sh":    cmdShell{},
-	"true":  cmdTrue{},
-	"false": cmdFalse{},
-	"echo":  cmdEcho{},
-	"cat":   cmdCat{},
-	"su":    cmdSu{},
-	"ls":    cmdLs{},
-	"cd":    cmdCd{},
-	"uname": cmdUname{},
+	"sh":       cmdShell{},
+	"true":     cmdTrue{},
+	"false":    cmdFalse{},
+	"echo":     cmdEcho{},
+	"cat":      cmdCat{},
+	"su":       cmdSu{},
+	"ls":       cmdLs{},
+	"cd":       cmdCd{},
+	"uname":    cmdUname{},
+	"ifconfig": cmdIfconfig{},
 }
 
 var ShellProgram = []string{"sh"}
