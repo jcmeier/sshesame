@@ -38,7 +38,7 @@ logging:
 
 auth:
   # Allow clients to connect without authenticating.
-  no_auth: false
+  no_auth: true
 
   # The maximum number of authentication attempts permitted per connection.
   # If set to a negative number, the number of attempts are unlimited.

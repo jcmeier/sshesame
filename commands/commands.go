@@ -41,6 +41,8 @@ var commands = map[string]command{
 	"cat":   cmdCat{},
 	"su":    cmdSu{},
 	"ls":    cmdLs{},
+	"cd":    cmdCd{},
+	"uname": cmdUname{},
 }
 
 var ShellProgram = []string{"sh"}

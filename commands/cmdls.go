@@ -7,12 +7,20 @@ import (
 
 type cmdLs struct{}
 
-var userfiles = []string{"Hello", "World", "Golang", "Example"}
+var userFiles = []string{"pictures", "private", "work", "data"}
+var rootFiles = []string{"private", "config"}
 
 func (cmdLs) execute(context CommandContext) (uint32, error) {
 	separator := " "
-	result := strings.Join(userfiles, separator) + " ARGS: "
-	result += strings.Join(context.args, " ")
+	result := ""
+
+	if context.user == "root" {
+		result = strings.Join(rootFiles, separator)
+
+	} else {
+		result = strings.Join(userFiles, separator)
+	}
+
 	_, err := fmt.Fprintln(context.stdout, result)
 	return 0, err
 }
